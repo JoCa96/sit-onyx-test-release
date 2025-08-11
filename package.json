@@ -1,6 +1,6 @@
 {
   "name": "@joca96/sit-onyx-test-release",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "",
   "main": "./src/index.js",
   "type": "module",
