@@ -49,8 +49,7 @@ jobs:
           pnpm exec changeset version
           pnpm exec changeset publish
           git add --all
-          if [[ `git status --porcelain` ]]; then
-            git commit --amend --no-edit
+          if [[ `git status --branch --porcelain | grep ahead` ]]; then
             git push --follow-tags
           else
             echo "No new version. Nothing to commit."
