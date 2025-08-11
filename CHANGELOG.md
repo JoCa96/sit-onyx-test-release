@@ -1,5 +1,11 @@
 # @joca96/sit-onyx-test-release
 
+## 0.1.1
+
+### Patch Changes
+
+- 4c12d44: new patch
+
 ## 0.1.0
 
 ### Minor Changes
