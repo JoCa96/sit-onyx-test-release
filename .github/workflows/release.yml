@@ -41,19 +41,19 @@ jobs:
           git config user.name "Release Bot[bot]"
           git config user.email "bot@example.com"
 
-      - name: ⛴️ Version and Publish
+      - name: Version
         run: |
           set -ex
 
           pnpm i
           pnpm exec changeset version
-          pnpm exec changeset publish
-          git add --all
-          if [[ `git status --branch --porcelain | grep ahead` ]]; then
-            git push --follow-tags
-          else
-            echo "No new version. Nothing to commit."
-          fi
+
+      - name: Publish
+        uses: changesets/action@v1
+        with:
+          publish: pnpm exec changeset publish
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       #- name: 📸 Snapshot and Publish
       #  run: |
