@@ -8,7 +8,6 @@ on:
 env:
   # The release + deployment will be done on "prod" stage if on main branch, on "dev" stage otherwise
   STAGE: ${{ github.ref_name == 'main' && 'prod' || 'dev' }}
-  TURBO_TOKEN: ${{ secrets.TURBO_REMOTE_CACHE__TURBO_TOKEN }}
 
 jobs:
   release:
@@ -46,7 +45,7 @@ jobs:
           set -ex
 
           pnpm i
-          pnpm exec changeset version
+          pnpm exec changeset version ${{ github.ref_name == 'main' && '--snapshot' || '' }}
 
       - name: Publish
         uses: changesets/action@v1
