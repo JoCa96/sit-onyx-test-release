@@ -1,0 +1,20 @@
+{
+  "name": "@joca96/sit-onyx-test-release",
+  "version": "0.0.0",
+  "description": "",
+  "main": "./src/index.js",
+  "type": "module",
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.14.0",
+  "devDependencies": {
+    "@changesets/cli": "^2.29.5"
+  }
+}
