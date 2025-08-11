@@ -1,5 +1,11 @@
 # @joca96/sit-onyx-test-release
 
+## 0.1.2
+
+### Patch Changes
+
+- 5b7cd30: another patch 2
+
 ## 0.1.1
 
 ### Patch Changes
