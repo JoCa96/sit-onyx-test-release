@@ -13,7 +13,6 @@ jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
-    environment: ${{ github.ref_name == 'main' && 'prod' || 'dev' }}
     permissions:
       id-token: write
       contents: write
@@ -41,7 +40,8 @@ jobs:
       - name: ⛴️ Version and Publish
         run: |
           set -ex
-          
+
+          pnpm i
           pnpm exec changeset version
           pnpm exec changeset publish
           git add --all
