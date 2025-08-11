@@ -19,10 +19,6 @@ jobs:
       packages: write
     steps:
       - uses: actions/checkout@v4
-        with:
-          ssh-key: ${{ secrets.GH_PUSH_PROTECTED_KEY }}
-          # needed when building VitePress docs so timestamps can be calculated correctly
-          fetch-depth: 0
 
       - name: 🧑‍💼 Setup pnpm
         uses: pnpm/action-setup@v4
@@ -31,6 +27,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           cache: pnpm
+          node-version-file: '.node-version'
+
+      # *pnpm* uses *npm* under the hood for publishing.
+      # For publishing securely the latest npm version should always be used.
+      - name: Keep npm up-to-date
+        run: npm install -g npm@latest
+        shell: bash
 
       - name: 🤖 Configure Git Bot
         run: |
