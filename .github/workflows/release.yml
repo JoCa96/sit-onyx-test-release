@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - "main"
+  workflow_dispatch:
 
 env:
   # The release + deployment will be done on "prod" stage if on main branch, on "dev" stage otherwise
@@ -27,7 +28,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           cache: pnpm
-          node-version-file: '.node-version'
+          node-version-file: ".node-version"
 
       # *pnpm* uses *npm* under the hood for publishing.
       # For publishing securely the latest npm version should always be used.
