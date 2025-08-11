@@ -7,6 +7,10 @@
   "files": [
     "src"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JoCa96/sit-onyx-test-release"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
