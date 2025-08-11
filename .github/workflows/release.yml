@@ -1,0 +1,62 @@
+name: Release
+on:
+  push:
+    branches:
+      - "main"
+
+env:
+  # The release + deployment will be done on "prod" stage if on main branch, on "dev" stage otherwise
+  STAGE: ${{ github.ref_name == 'main' && 'prod' || 'dev' }}
+  TURBO_TOKEN: ${{ secrets.TURBO_REMOTE_CACHE__TURBO_TOKEN }}
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    environment: ${{ github.ref_name == 'main' && 'prod' || 'dev' }}
+    permissions:
+      id-token: write
+      contents: write
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ssh-key: ${{ secrets.GH_PUSH_PROTECTED_KEY }}
+          # needed when building VitePress docs so timestamps can be calculated correctly
+          fetch-depth: 0
+
+      - name: 🧑‍💼 Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: 🏗️ Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          cache: pnpm
+
+      - name: 🤖 Configure Git Bot
+        run: |
+          git config user.name "Release Bot[bot]"
+          git config user.email "bot@example.com"
+
+      - name: ⛴️ Version and Publish
+        run: |
+          set -ex
+          
+          pnpm exec changeset version
+          pnpm exec changeset publish
+          git add --all
+          if [[ `git status --porcelain` ]]; then
+            git commit --amend --no-edit
+            git push --follow-tags
+          else
+            echo "No new version. Nothing to commit."
+          fi
+
+      #- name: 📸 Snapshot and Publish
+      #  run: |
+      #    # [Snapshot release fails if repository is in pre-release mode](https://github.com/changesets/changesets/issues/1195)
+      #    rm -f .changeset/pre.json
+      #    # Add empty changeset so we always have a new snapshot release for each new run
+      #    pnpm exec changeset add --empty
+      #    pnpm exec changeset version --snapshot
+      #    pnpm exec changeset publish --tag snapshot
