@@ -1,7 +1,7 @@
 {
   "name": "@joca96/sit-onyx-test-release",
   "version": "0.1.1",
-  "description": "",
+  "description": "hello-world",
   "main": "./src/index.js",
   "type": "module",
   "files": [
